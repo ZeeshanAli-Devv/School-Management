@@ -1,3 +1,13 @@
+axios.defaults.baseURL = server;
+
+window.onload = async ()=>{
+  await getSession()
+  if(session)
+  {
+    location.replace("app/dashboard.html");
+  }
+}
+
 const signup = async (event)=> {
     event.preventDefault();
     const schoolName = document.getElementById("schoolName").value.trim();
@@ -16,7 +26,7 @@ const signup = async (event)=> {
     
     try
     {
-        await axios.post("http://localhost:8080/school/signup", payload)
+        await axios.post("school/signup", payload)
         Swal.fire({
             icon:"success",
             title: "Signup Success",

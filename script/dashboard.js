@@ -1,3 +1,7 @@
+window.onload = async ()=>{
+  await getSession()
+}
+
 // Charts 
 document.addEventListener('DOMContentLoaded', function() {
   

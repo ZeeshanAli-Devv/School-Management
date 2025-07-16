@@ -1,3 +1,13 @@
+axios.defaults.baseURL = server;
+
+window.onload = async ()=>{
+  await getSession()
+  if(session)
+  {
+    location.replace("app/dashboard.html");
+  }
+}
+
 const login = async(event)=>{
     event.preventDefault();
     const email = document.getElementById("email").value.trim();
@@ -8,7 +18,9 @@ const login = async(event)=>{
     }
     try
     {
-        await axios.post("http://localhost:8080/school/login", payload)
+        const res = await axios.post("school/login", payload)
+        localStorage.setItem("token", res.data.token)
+
         Swal.fire({
             icon:"success",
             title: "Login Success",

@@ -1,19 +1,5 @@
-// Toggle Password
-const togglePassword = (passwordInput , eyeIcon) =>{
-    const password = document.getElementById(passwordInput);
-    const icon     = document.getElementById(eyeIcon);
-
-    if(password.type == "password"){
-        password.type = "text";
-        icon.classList.remove("fa-eye")
-        icon.classList.add("fa-eye-slash")
-    }
-    else{
-        password.type = "password";
-        icon.classList.remove("fa-eye-slash")
-        icon.classList.add("fa-eye")
-    }
-}
+const picture = document.getElementById("profilePicture");
+const pic = localStorage.getItem("profile");
 
 window.onload = ()=>{
   if(pic){
@@ -21,15 +7,10 @@ window.onload = ()=>{
   }
 }
 
-const picture = document.getElementById("profilePicture");
-const pic = localStorage.getItem("profile");
-picture.src = pic || "https://api.dicebear.com/9.x/adventurer/svg?seed=Avery" + Math.random();
-
 // Update Photo
 const Updatedphoto = (event)=>{
   event.preventDefault()
   const pictureInput = document.getElementById("profilePictureInput");
-  
   const file = pictureInput.files[0];
   const fileReader = new FileReader();
   fileReader.readAsDataURL(file);
@@ -39,6 +20,41 @@ const Updatedphoto = (event)=>{
     picture.src = data;
     localStorage.setItem("profile", data)
   }
+}
+
+// Check Token
+let session = null;
+const server = "http://localhost:8080";
+axios.defaults.baseURL = server;
+
+const getSession = async ()=>{
+    const token = localStorage.getItem("token");
+    const url = location.href;
+
+    if(!token)
+    {
+        if(url.includes("login.html") || url.includes("signup.html"))
+        {
+            return
+        }
+        location.replace("../login.html");
+    }
+    else{
+        try
+        {
+            const res = await axios.post("token/verify", {token : token})
+            session = res.data;
+        }
+        catch(err)
+        {
+            localStorage.clear()
+            if(url.includes("login.html") || url.includes("signup.html"))
+            {
+                return
+            }
+            location.replace("../login.html");
+        }
+    }
 }
 
 // Toggle Functionality
@@ -122,3 +138,20 @@ const frequentlyTab = (faqId) => {
   p.classList.toggle("max-h-40");
   p.classList.toggle("opacity-100");
 };
+
+// Toggle Password
+const togglePassword = (passwordInput , eyeIcon) =>{
+    const password = document.getElementById(passwordInput);
+    const icon     = document.getElementById(eyeIcon);
+
+    if(password.type == "password"){
+        password.type = "text";
+        icon.classList.remove("fa-eye")
+        icon.classList.add("fa-eye-slash")
+    }
+    else{
+        password.type = "password";
+        icon.classList.remove("fa-eye-slash")
+        icon.classList.add("fa-eye")
+    }
+}
