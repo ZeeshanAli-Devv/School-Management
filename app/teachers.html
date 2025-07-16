@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>EduManage Dashboard</title>
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <!-- Remix CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet"/>
+  <!-- Awesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <!-- Animate CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+  <!-- Sweet CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <!-- Chart CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- External CSS -->
+  <link rel="stylesheet" href="../css/common.css">
+  <!-- Axios CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.10.0/axios.min.js"></script>
+</head>
+<body class="overflow-x-hidden bg-gray-50">
+  
+  <!-- Sidebar -->
+  <aside
+    id="sidebar" 
+    class="fixed top-0 left-0 h-full w-[250px] lg:w-[250px] bg-white border-r border-slate-100/15 z-50 transform transition-all duration-500 -translate-x-full lg:translate-x-0 overflow-auto hover:shadow-[0_0_30px_rgba(109,40,217,0.2)] overflow-x-hidden">
+
+    <!--School Logo -->
+    <div class="flex justify-center items-center mb-8 gap-2 p-4 border-b border-slate-300">
+      <i class="fas fa-graduation-cap text-3xl text-indigo-600"></i>
+      <h1 class="text-lg font-bold text-gray-800 mt-1">EduManage</h1>
+    </div>
+    
+    <!-- Dynamic Navigation -->
+    <nav class="flex-1 p-4">
+
+      <div class="mb-4">
+        <p class="text-xs uppercase text-gray-400 tracking-wider mb-4 pl-3 font-semibold">Main Menu</p>
+        
+        <div class="space-y-2">
+
+          <!-- Dashboard -->
+          <a href="dashboard.html" class="flex items-center p-3 rounded-xl transition-all duration-300 group hover:bg-gray-100 text-gray-600 hover:text-gray-900">
+            <i class="ri-dashboard-line mr-3 text-lg"></i>
+            <span class="text-sm font-medium">Dashboard</span>
+          </a>
+          
+          <!-- Students -->
+          <a href="students.html" class="flex items-center p-3 rounded-xl transition-all duration-300 group hover:bg-gray-100 text-gray-600 hover:text-gray-900">
+            <i class="ri-user-line mr-3 text-lg"></i>
+            <span class="text-sm font-medium">Students</span>
+            <!-- <span class="ml-auto bg-indigo-100 text-indigo-800 text-xs font-medium w-6 h-6 rounded-full flex justify-center items-center">12</span> -->
+          </a>
+          
+          <!-- Teachers -->
+          <a href="teachers.html" class="flex items-center p-3 rounded-xl transition-all duration-300 group bg-indigo-50 text-indigo-700 hover:bg-indigo-100 focus:bg-indigo-100 border-r-4 border-indigo-500">
+            <i class="ri-team-line mr-3 text-lg"></i>
+            <span class="text-sm font-medium">Teachers</span>
+            <!-- <span class="ml-auto bg-indigo-100 text-indigo-800 text-xs font-medium w-6 h-6 rounded-full flex justify-center items-center">8</span> -->
+          </a>
+          
+          <!-- Employees -->
+          <a href="employees.html" class="flex items-center p-3 rounded-xl transition-all duration-300 group hover:bg-gray-100 text-gray-600 hover:text-gray-900">
+            <i class="ri-user-line mr-3 text-lg"></i>
+            <span class="text-sm font-medium">Employees</span>
+          </a>
+          
+          <!-- Subjects -->
+          <a href="subjects.html" class="flex items-center p-3 rounded-xl transition-all duration-300 group hover:bg-gray-100 text-gray-600 hover:text-gray-900">
+            <i class="ri-book-2-line mr-3 text-lg"></i>
+            <span class="text-sm font-medium">Subjects</span>
+          </a>
+          
+          <!-- Classes -->
+          <a href="classes.html" class="flex items-center p-3 rounded-xl transition-all duration-300 group hover:bg-gray-100 text-gray-600 hover:text-gray-900">
+            <i class="ri-building-2-line mr-3 text-lg"></i>
+            <span class="text-sm font-medium">Classes</span>
+          </a>
+          
+          <!-- Payments -->
+          <a href="payments.html" class="flex items-center p-3 rounded-xl transition-all duration-300 group hover:bg-gray-100 text-gray-600 hover:text-gray-900">
+            <i class="ri-money-dollar-circle-line mr-3 text-lg"></i>
+            <span class="text-sm font-medium">Payments</span>
+          </a>
+          
+          <!-- Expenses -->
+          <a href="expenses.html" class="flex items-center p-3 rounded-xl transition-all duration-300 group hover:bg-gray-100 text-gray-600 hover:text-gray-900">
+            <i class="ri-wallet-3-line mr-3 text-lg"></i>
+            <span class="text-sm font-medium">Expenses</span>
+          </a>
+
+          <!-- Salary -->
+          <a href="salary.html" class="flex items-center p-3 rounded-xl transition-all duration-300 group hover:bg-gray-100 text-gray-600 hover:text-gray-900">
+            <i class="ri-bank-card-line mr-3 text-lg"></i>
+            <span class="text-sm font-medium">Salary</span>
+          </a>
+
+          <!-- Help Card with Hover Effect -->
+          <div class="mt-8 border-t border-gray-200 pt-6 space-y-4 px-3">
+            <a href="support.html">
+              <div 
+                class="group relative overflow-hidden bg-blue-50 p-3 rounded-lg hover:bg-blue-100 transition-all duration-200 border border-blue-100 hover:border-blue-200">
+                <div class="flex items-center justify-center gap-2">
+                  <i class="ri-customer-service-line text-indigo-600 text-lg group-hover:text-indigo-700 transition-colors"></i>
+                  <div>
+                    <p 
+                      class="text-xs text-indigo-600 group-hover:text-indigo-700 font-medium flex items-center transition-colors">
+                      Contact support
+                      <i class="ri-arrow-right-line ml-1 mt-0.5 transition-transform group-hover:translate-x-1"></i>
+                    </p>
+                  </div>
+                </div>
+                <!-- Animated underline (same as logout) -->
+                <div class="absolute bottom-0 left-0 right-0 h-0.5 bg-indigo-500 origin-left transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></div>
+              </div>
+            </a>
+
+            <!-- Logout Button -->
+            <button 
+              onclick="confirmLogout()" 
+              class="w-full group relative flex items-center justify-center gap-2 p-2.5 rounded-lg bg-white border border-gray-200 hover:border-red-200 hover:bg-red-50 transition-all duration-200 mt-6">
+              
+              <!-- Single icon with hover effect -->
+              <i class="ri-logout-box-r-line text-red-500 group-hover:text-red-600 text-lg transition-all duration-200 group-hover:-translate-y-0.5"></i>
+              
+              <span class="text-red-500 group-hover:text-red-600 font-medium text-sm cursor-pointer">Logout</span>
+              
+              <!-- Animated underline -->
+              <div class="absolute bottom-0 left-0 right-0 h-0.5 bg-red-500 origin-left transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></div>
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </nav>
+
+  </aside>
+    
+  <div id="main" class="transition-all duration-300 lg:ml-[250px]">
+
+    <!-- Navbar -->
+    <nav
+      id="navbar" 
+      class="bg-white border-b border-gray-200 px-6 h-16 fixed top-0 left-0 lg:w-[calc(100%-250px)] lg:ml-[250px] w-full flex items-center justify-between z-40 shadow-sm">
+      
+      <!-- Search Bar -->
+      <div 
+        class="border border-gray-200 p-2 w-1/2 flex items-center gap-3 rounded-lg bg-gray-50 focus-within:border-indigo-500 focus-within:ring-1 focus-within:ring-indigo-500 transition-all duration-200">
+          <i class="fa-solid fa-search text-gray-400 text-sm"></i>
+          <input 
+            type="search" 
+            placeholder="Search students, teachers, classes..." 
+            class="w-full outline-none bg-transparent text-sm placeholder-gray-400">
+      </div>
+      
+      <!-- Right Side Controls -->
+      <div class="flex gap-4 items-center">
+
+        <!-- User Profile Picture -->
+        <div class="flex items-center gap-3 ml-2">
+          <div class="relative w-9 h-9 rounded-full overflow-hidden shadow-sm group">
+            
+            <input 
+              type="file" 
+              id="profilePictureInput"
+              accept="image/*"
+              class="hidden"
+              onchange="Updatedphoto(event)"
+            >
+            <!-- Clickable container that triggers file input -->
+            <label 
+              for="profilePictureInput"
+              class="block w-full h-full cursor-pointer">
+              
+              <!-- Profile picture -->
+              <img
+                src="Assets/Pic.jpg"
+                id="profilePicture" 
+                alt="User profile" 
+                class="w-full h-full object-cover transition-opacity duration-300 group-hover:opacity-80"
+              >
+              
+              <!-- Change picture overlay -->
+              <div 
+                class="absolute inset-0 bg-blue-500/70 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <div class="text-center p-1">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 mx-auto text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+                  </svg>
+                  <span class="text-white text-[8px] font-medium block">Change</span>
+                </div>
+              </div>
+            </label>
+
+          </div>
+        </div>
+        
+        <!-- Toggle Button -->
+        <button 
+          onclick="toggleSidebar()" 
+          class="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer transition-all duration-200 bg-blue-500 hover:bg-blue-600 text-white hover:shadow-[inset_0_0_0_2px_white] hover:border border-gray-300">
+          <i class="ri-menu-3-line text-sm"></i>
+        </button>
+
+      </div>
+      
+    </nav>
+
+    <!-- CONTENT -->
+    <div class="flex-1 pt-24 pb-8 px-4 lg:px-8 relative">
+      
+      <!-- Header with Add Button -->
+      <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
+        <div>
+          <h1 class="text-2xl font-bold text-gray-800">Teacher Management</h1>
+          <p class="text-sm text-gray-500 mt-1">Manage all teacher records and activities</p>
+        </div>
+
+        <button 
+          onclick="openDrawer()"
+          class="cursor-pointer bg-indigo-600 hover:bg-indigo-700 transition-colors px-6 py-2.5 rounded-lg text-white text-sm font-medium flex items-center gap-2 shadow-sm hover:shadow-md active:scale-95">
+          <i class="ri-add-line"></i>
+          Add New Teacher
+        </button>
+      </div>
+
+      <!-- Filters and Search Bar -->
+      <div class="bg-white shadow-sm rounded-xl border border-gray-200 p-4 mb-6">
+        <div class="flex flex-col lg:flex-row gap-4 items-center">
+
+          <div class="relative flex-1 w-full">
+            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <i class="ri-search-line text-gray-400"></i>
+            </div>
+            <input 
+              type="search" 
+              placeholder="Search teachers by name, ID or class..." 
+              class="block w-full pl-10 pr-3 py-2.5 border border-gray-200 rounded-lg bg-gray-50 focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500 text-sm transition-all"
+            >
+          </div>
+          
+          <div class="flex flex-wrap gap-12 w-full lg:w-auto">
+            <select class="text-sm border border-gray-200 rounded-lg py-2.5 px-4 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500 w-full lg:w-auto">
+              <option>Export</option>
+              <option>PDF</option>
+              <option>XLS</option>
+            </select>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Student Table -->
+      <div class="bg-white shadow-sm rounded-xl border border-gray-200 overflow-hidden">
+
+        <div class="overflow-x-auto">
+          <table class="min-w-full divide-y divide-gray-200">
+
+            <thead class="bg-gray-50">
+              <tr>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-semibold text-black uppercase tracking-wider">Teacher ID</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-semibold text-black uppercase tracking-wider">Name</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-semibold text-black uppercase tracking-wider">Email</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-semibold text-black uppercase tracking-wider">Contact</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-semibold text-black uppercase tracking-wider">Subject</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-semibold text-black uppercase tracking-wider">Actions</th>
+              </tr>
+            </thead>
+
+            <tbody class="bg-white divide-y divide-gray-200">
+              
+              <!-- Student Row 1 -->
+              <tr>
+                <td class="px-6 py-4 whitespace-nowrap text-xs text-gray-900">STU001</td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <div class="flex items-center ">
+                    <div>
+                      <div class="text-xs text-gray-900">John Doe</div>
+                    </div>
+                  </div>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap text-xs text-gray-500">john@gmail.com</td>
+                <td class="px-6 py-4 whitespace-nowrap text-xs text-gray-500">+1 (555) 123-4567</td>
+                <td class="px-6 py-4 whitespace-nowrap text-xs text-gray-500">English</td>
+                <td class="px-6 py-4 whitespace-nowraptext-sm font-medium">
+                  <div class="flex items-center gap-3">
+                    <button class="text-blue-600 w-6 h-6 bg-blue-100 rounded-full cursor-pointer hover:scale-110 transition-all">
+                      <i class="ri-edit-line"></i>
+                    </button>
+                    <button class="text-red-600  w-6 h-6 bg-red-100 rounded-full cursor-pointer hover:scale-110 transition-all">
+                      <i class="ri-delete-bin-line"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+            </tbody>
+
+          </table>
+        </div>
+
+      </div>
+      
+    </div>
+    
+    <div id="drawer" class="hidden bg-black/70 w-full h-full fixed top-0 left-0 z-50 flex justify-center items-center p-4">
+      <div id="sidebar" class="bg-white lg:p-8 md:p-8 p-2 lg:w-2/3 w-full lg:rounded-xl rounded-md shadow-2xl max-w-4xl max-h-[90vh] overflow-y-auto custom-scrollbar">
+        
+        <!-- Title Heading -->
+        <div class="flex justify-between items-center pb-4 mb-6 p-2">
+          <h1 class="font-bold lg:text-2xl text-lg text-gray-800">Add New Teacher</h1>
+          <div>
+            <button onclick="closeDrawer()" class="lg:w-8 lg:h-8 w-5 h-5 rounded-full cursor-pointer bg-red-500 hover:bg-red-600 active:scale-90 transition-all duration-300 text-white flex items-center justify-center">
+              <i class="fa-solid fa-xmark text-sm"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Contact Form -->
+        <form action="" onsubmit="createTeacher(event)">
+
+          <!-- Form Section Header -->
+          <div class="col-span-2">
+            <h2 class="text-lg font-semibold text-gray-700 border-l-4 border-blue-500 pl-3 py-1 bg-gray-50 rounded-r">Personal Information</h2>
+          </div>
+
+          <div class="grid lg:grid-cols-2 gap-6 py-4">
+            <!-- Teacher Name -->
+            <div class="flex flex-col gap-1">
+              <label for="teacherName" class="font-medium text-gray-700 text-sm">Teacher Name <span class="text-red-500">*</span></label>
+              <input 
+                id="teacherName" 
+                type="text" 
+                name="teacherName"
+                class="border border-gray-300 p-2.5 rounded-md focus:ring-2 focus:ring-blue-200 focus:border-blue-500 outline-none transition-all"
+                required
+                placeholder="Enter full name"
+              >
+            </div>
+
+            <!-- Gender -->
+            <div class="flex flex-col gap-1">
+              <label for="gender" class="font-medium text-gray-700 text-sm">Gender <span class="text-red-500">*</span></label>
+              <select id="gender" class="border border-gray-300 p-2.5 rounded-md focus:ring-2 focus:ring-blue-200 focus:border-blue-500 outline-none transition-all appearance-none bg-white" required>
+                <option value="" selected disabled hidden>Select Gender</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+
+            <!-- Date of Birth -->
+            <div class="flex flex-col gap-1">
+              <label for="dob" class="font-medium text-gray-700 text-sm">Date of Birth <span class="text-red-500">*</span></label>
+              <input 
+                id="dob" 
+                type="date" 
+                name="date"
+                required
+                class="border border-gray-300 p-2.5 rounded-md focus:ring-2 focus:ring-blue-200 focus:border-blue-500 outline-none transition-all"
+              >
+            </div>
+
+            <!-- Religion -->
+            <div class="flex flex-col gap-1">
+              <label for="religion" class="font-medium text-gray-700 text-sm">Religion <span class="text-red-500">*</span></label>
+              <select id="religion" class="border border-gray-300 p-2.5 rounded-md focus:ring-2 focus:ring-blue-200 focus:border-blue-500 outline-none transition-all appearance-none bg-white" required>
+                <option value="" selected disabled hidden>Select Religion</option>
+                <option value="islam">Islam</option>
+                <option value="christian">Christian</option>
+                <option value="hindu">Hindu</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+
+          </div>
+        
+          <!-- Form Section Header -->
+          <div class="col-span-2 mt-2">
+            <h2 class="text-lg font-semibold text-gray-700 border-l-4 border-blue-500 pl-3 py-1 bg-gray-50 rounded-r">Contact Information</h2>
+          </div>
+
+          <div class="grid lg:grid-cols-2 gap-6 py-4">
+            <!-- Mobile -->
+            <div class="flex flex-col gap-1">
+              <label for="mobile" class="font-medium text-gray-700 text-sm">Mobile No <span class="text-red-500">*</span></label>
+              <input 
+                id="mobile" 
+                type="number" 
+                name="mobile"
+                required
+                class="border border-gray-300 p-2.5 rounded-md focus:ring-2 focus:ring-blue-200 focus:border-blue-500 outline-none transition-all"
+                placeholder="Enter mobile number"
+              >
+            </div>
+  
+            <!-- Email -->
+            <div class="flex flex-col gap-1">
+              <label for="email" class="font-medium text-gray-700 text-sm">Email <span class="text-red-500">*</span></label>
+              <input 
+                id="email" 
+                type="email" 
+                name="email"
+                required
+                class="border border-gray-300 p-2.5 rounded-md focus:ring-2 focus:ring-blue-200 focus:border-blue-500 outline-none transition-all"
+                placeholder="Enter email address"
+              >
+            </div>
+          </div>
+
+          <!-- Form Section Header -->
+          <div class="col-span-2 mt-2">
+            <h2 class="text-lg font-semibold text-gray-700 border-l-4 border-blue-500 pl-3 py-1 bg-gray-50 rounded-r">Academic Information</h2>
+          </div>
+
+          <div class="grid lg:grid-cols-2 gap-6 py-4">
+            <!-- Qualification -->
+            <div class="flex flex-col gap-1">
+              <label for="qualification" class="font-medium text-gray-700 text-sm">Qualification <span class="text-red-500">*</span></label>
+              <select id="qualification" class="border border-gray-300 p-2.5 rounded-md focus:ring-2 focus:ring-blue-200 focus:border-blue-500 outline-none transition-all appearance-none bg-white" required>
+                <option value="" selected disabled hidden>Select Qualification</option>
+                <option value="one">Matric</option>
+                <option value="one">Intermediate</option>
+                <option value="one">Graduate</option>
+                <option value="one">Master</option>
+               
+              </select>
+            </div>
+  
+            <!-- Subject -->
+            <div class="flex flex-col gap-1">
+              <label for="subject" class="font-medium text-gray-700 text-sm">Subject <span class="text-red-500">*</span></label>
+              <select id="subject" class="border border-gray-300 p-2.5 rounded-md focus:ring-2 focus:ring-blue-200 focus:border-blue-500 outline-none transition-all appearance-none bg-white" required>
+                <option value="" selected disabled hidden>Select Subject</option>
+                <option value="english">English</option>
+                <option value="math">Math</option>
+                <option value="science">Science</option>
+              </select>
+            </div>
+  
+            <!-- Previous School -->
+            <div class="flex flex-col gap-1 lg:col-span-2">
+              <label for="previousSchool" class="font-medium text-gray-700 text-sm">Previous School</label>
+              <input 
+                id="previousSchool" 
+                type="text" 
+                name="previousSchool"
+                placeholder="(optional)"
+                class="border border-gray-300 p-2.5 rounded-md focus:ring-2 focus:ring-blue-200 focus:border-blue-500 outline-none transition-all"
+              >
+            </div>
+
+          </div>
+
+          <!-- Form Section Header -->
+
+          <div class="col-span-2 mt-2">
+            <h2 class="text-lg font-semibold text-gray-700 border-l-4 border-blue-500 pl-3 py-1 bg-gray-50 rounded-r">Address Information</h2>
+          </div>
+          
+          <div class="grid lg:grid-cols-2 gap-6 py-4">
+           
+            <!-- City -->
+            <div class="flex flex-col gap-1">
+              <label for="city" class="font-medium text-gray-700 text-sm">City <span class="text-red-500">*</span></label>
+              <input 
+                id="city" 
+                type="text" 
+                name="city"
+                required
+                class="border border-gray-300 p-2.5 rounded-md focus:ring-2 focus:ring-blue-200 focus:border-blue-500 outline-none transition-all"
+                placeholder="Enter city"
+              >
+            </div>
+  
+            <!-- State -->
+            <div class="flex flex-col gap-1">
+              <label for="state" class="font-medium text-gray-700 text-sm">State <span class="text-red-500">*</span></label>
+              <input 
+                id="state" 
+                type="text" 
+                name="state"
+                required
+                class="border border-gray-300 p-2.5 rounded-md focus:ring-2 focus:ring-blue-200 focus:border-blue-500 outline-none transition-all"
+                placeholder="Enter state"
+              >
+            </div>
+  
+            <!-- Country -->
+            <div class="flex flex-col gap-1">
+              <label for="country" class="font-medium text-gray-700 text-sm">Country <span class="text-red-500">*</span></label>
+              <input 
+                id="country" 
+                type="text" 
+                required
+                name="country"
+                class="border border-gray-300 p-2.5 rounded-md focus:ring-2 focus:ring-blue-200 focus:border-blue-500 outline-none transition-all"
+                placeholder="Enter country"
+              >
+            </div>
+  
+            <!-- PinCode -->
+            <div class="flex flex-col gap-1">
+              <label for="pinCode" class="font-medium text-gray-700 text-sm">Pin Code <span class="text-red-500">*</span></label>
+              <input 
+                id="pinCode" 
+                type="number" 
+                name="pinCode"
+                class="border border-gray-300 p-2.5 rounded-md focus:ring-2 focus:ring-blue-200 focus:border-blue-500 outline-none transition-all"
+                required
+                placeholder="Enter postal code"
+              >
+            </div>
+
+            <!-- Address -->
+            <div class="flex flex-col gap-1 lg:col-span-2">
+              <label for="address" class="font-medium text-gray-700 text-sm">Address <span class="text-red-500">*</span></label>
+              <textarea required rows="3" name="address" id="address" class="border border-gray-300 p-2.5 rounded-md focus:ring-2 focus:ring-blue-200 focus:border-blue-500 outline-none transition-all" placeholder="Enter full address"></textarea>
+            </div>
+  
+          </div>
+
+          <!-- Buttons -->
+          <div class="flex items-center gap-4 col-span-2 mt-4 pt-4 justify-end">
+            <button
+              type="button"
+              onclick="closeDrawer()" 
+              class="lg:w-36 w-24 py-2.5 lg:text-base text-sm border border-gray-300 rounded-md text-blue-600 font-medium transition-all hover:bg-blue-50 cursor-pointer active:scale-95 duration-300 flex items-center justify-center gap-2">
+              Cancel
+            </button>
+
+            <button 
+              type="submit"
+              class="lg:w-36 w-24 py-2.5 lg:text-base text-sm bg-blue-500 rounded-md text-white font-medium transition-all hover:bg-blue-700 cursor-pointer active:scale-95 duration-300 flex items-center justify-center gap-2">
+              Add Teacher 
+            </button>
+          </div>
+
+        </form>
+
+      </div>
+    </div>
+    
+  </div>
+  
+  <!-- <script src="../script/common.js"></script> -->
+  <script src="../script/teachers.js"></script>
+  
+</body>
+</html>
