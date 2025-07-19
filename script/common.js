@@ -122,7 +122,12 @@ const openDrawer = () => {
 };
 
 // Close Drawer
-const closeDrawer = () => {
+const closeDrawer = (redirect=false) => {
+    if(redirect)
+    {
+        location.href = location.href
+    }
+
     drawer.classList.remove('animate__fadeIn');
     drawer.classList.add('animate__animated', 'animate__fadeOut');
     setTimeout(() => {
@@ -154,4 +159,15 @@ const togglePassword = (passwordInput , eyeIcon) =>{
         icon.classList.remove("fa-eye-slash")
         icon.classList.add("fa-eye")
     }
+}
+
+// Authorize User
+const getServerSession = ()=>{
+    const token = localStorage.getItem("token");
+    const option = {
+        headers :  {
+            Authorization  : `Bearer ${token}`
+        }
+    }
+    return option
 }
