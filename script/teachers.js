@@ -3,6 +3,7 @@ let editId = null;
 
 window.onload = async ()=>{
   await getSession()
+  fetchSubject()
   fetchTeacher()
 }
 
@@ -79,6 +80,30 @@ const createTeacher = async (event)=>{
         })   
     }
 }
+
+const fetchSubject = async ()=>{
+    try
+    {
+        const res =  await axios.get("/subject", getServerSession())
+        const classSubject = document.getElementById("subjects")
+
+        for(let subject of res.data)
+        {
+            // const option =  `<option>${subject.subjectName}</option>`
+            const option = `<option value = "${subject._id}">${subject.subjectName}</option>`
+            classSubject.innerHTML += option
+        }
+    }
+    catch(err)
+    {
+        swal.fire({
+            icon  : "error",
+            title : "Failed",
+            text  : err.response ? err.response.data.message : err.message
+        })
+    }
+} 
+
 
 const fetchTeacher = async ()=>{
     try
@@ -222,28 +247,14 @@ const editTeacher = (teacherName, gender, dob, religion, mobile, email, qualific
 const updateTeacher = async ()=>{
     
     const teacherName   = document.getElementById("teacherName").value.trim()
-    // const gender        = document.getElementById("gender").value.trim()
-    // const dob           = document.getElementById("dob").value.trim()
-    // const religion      = document.getElementById("religion").value.trim()
     const mobile        = document.getElementById("mobile").value
     const email         = document.getElementById("email-id").value.trim()
-    // const qualification = document.getElementById("qualification").value.trim()
     const subjects      = document.getElementById("subjects").value.trim()
-    // const address       = document.getElementById("address").value.trim()
-    // const city          = document.getElementById("city").value.trim()
-    // const state         = document.getElementById("state").value.trim()
-    // const country       = document.getElementById("country").value.trim()
-    // const pincode       = document.getElementById("pincode").value
-    // const previousSchool= document.getElementById("previousSchool").value.trim()
     
     const payload = {
         teacherName    : teacherName,
-        // gender         : gender,
-        // dob            : dob,
-        // religion       : religion,
         mobile         : mobile,
         email          : email,
-        // qualification  : qualification,
         subjects       : subjects,
     }  
     try
