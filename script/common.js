@@ -164,10 +164,10 @@ const togglePassword = (passwordInput , eyeIcon) =>{
 // Authorize User
 const getServerSession = ()=>{
     const token = localStorage.getItem("token");
-    const option = {
+    const options = {
         headers :  {
             Authorization  : `Bearer ${token}`
         }
     }
-    return option
+    return options
 }

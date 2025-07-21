@@ -84,13 +84,12 @@ const createTeacher = async (event)=>{
 const fetchSubject = async ()=>{
     try
     {
-        const res =  await axios.get("/subject", getServerSession())
+        const res =  await axios.get("subject", getServerSession())
         const classSubject = document.getElementById("subjects")
 
         for(let subject of res.data)
         {
-            // const option =  `<option>${subject.subjectName}</option>`
-            const option = `<option value = "${subject._id}">${subject.subjectName}</option>`
+            const option = `<option>${subject.subjectName}</option>`
             classSubject.innerHTML += option
         }
     }
