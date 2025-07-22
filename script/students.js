@@ -3,7 +3,8 @@ let editId = null;
 
 window.onload = async ()=>{
   await getSession()
-  fetchStudent()
+  await fetchStudent()
+  await fetchClass()
 }
 
 const createAdmission = async (event)=>{
@@ -24,7 +25,7 @@ const createAdmission = async (event)=>{
     const religion      = document.getElementById("religion").value.trim()
     const mobile        = document.getElementById("mobile").value
     const email         = document.getElementById("email-id").value.trim()
-    const sclass        = document.getElementById("class").value.trim()
+    const sclass        = document.getElementById("classes").value.trim()
     const section       = document.getElementById("section").value.trim()
     const address       = document.getElementById("address").value.trim()
     const city          = document.getElementById("city").value.trim()
@@ -85,6 +86,24 @@ const createAdmission = async (event)=>{
     }
 }
 
+const fetchClass = async ()=>{
+    try
+    {
+        const res = await axios.get("/class", getServerSession())
+        const className = document.getElementById("classes")
+        for(let sclass of res.data)
+        {
+            const option = `<option value = "${sclass._id}">${sclass.class}</option>`
+            className.innerHTML += option
+        }
+    }
+    catch(err)
+    {
+        console.log(err.response ? err.response.data.message : err.message);
+    }
+}
+
+// Get Student
 const fetchStudent = async ()=>{
     try
     {
@@ -106,7 +125,7 @@ const fetchStudent = async ()=>{
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-xs text-gray-500">${student.email}</td>
                     <td class="px-6 py-4 whitespace-nowrap text-xs text-gray-500">${student.mobile}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-xs text-gray-500 capitalize">${student.class}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-xs text-gray-500 capitalize">${student.class.class}</td>
                     <td class="px-6 py-4 whitespace-nowrap">
                         <span class="px-2 py-1 text-xs font-medium rounded-full bg-green-100 text-green-800">${student.section.toUpperCase()}</span>
                     </td> 
@@ -201,7 +220,7 @@ const editStudent = (name, father, mother, gender, dob, religion, mobile, email,
     const religionField         = document.getElementById("religion")
     const mobileField           = document.getElementById("mobile")
     const emailField            = document.getElementById("email-id")
-    const classField            = document.getElementById("class")
+    const classField            = document.getElementById("classes")
     const sectionField          = document.getElementById("section")
     const addressField          = document.getElementById("address")
     const cityField             = document.getElementById("city")
@@ -237,7 +256,7 @@ const updateStudent = async ()=>{
     const studentName   = document.getElementById("studentName").value.trim()
     const mobile        = document.getElementById("mobile").value
     const email         = document.getElementById("email-id").value.trim()
-    const sclass        = document.getElementById("class").value.trim()
+    const sclass        = document.getElementById("classes").value.trim()
     const section       = document.getElementById("section").value.trim()
     
     const payload = {

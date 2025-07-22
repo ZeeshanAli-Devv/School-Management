@@ -18,7 +18,7 @@ const createSubject = async (event) =>{
     }
     
     const subjectName = document.getElementById("subject").value.trim();
-    const fullMarks = document.getElementById("fullmarks").value;
+    const fullMarks   = document.getElementById("fullmarks").value;
 
     const payload = {
         subjectName  : subjectName,
@@ -27,7 +27,9 @@ const createSubject = async (event) =>{
     
     try
     {
-        await axios.post("/subject", payload, getServerSession())
+        const res = await axios.post("/subject", payload, getServerSession())
+        console.log(res.data);
+        
         closeDrawer()
         form.reset()
         Swal.fire({
@@ -38,12 +40,15 @@ const createSubject = async (event) =>{
             position : 'top-end',
             timerProgressBar : true,
             timer : 2000
-        }).then(()=>{
+        })
+        .then(()=>{
             location.href = location.href;
         }) 
     }
     catch(err)
     {
+        console.log(err.response ? err.response.data.message : err.message);
+        
         Swal.fire({
             icon:"error",
             title: "Subject Failed",

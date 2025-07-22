@@ -3,8 +3,8 @@ let editId = null;
 
 window.onload = async ()=>{
   await getSession()
-  fetchSubject()
-  fetchTeacher()
+  await fetchTeachers()
+  await fetchSubject()
 }
 
 const createTeacher = async (event)=>{
@@ -17,41 +17,43 @@ const createTeacher = async (event)=>{
         return
     }
     
-    const teacherName   = document.getElementById("teacherName").value.trim()
-    const gender        = document.getElementById("gender").value.trim()
-    const dob           = document.getElementById("dob").value.trim()
-    const religion      = document.getElementById("religion").value.trim()
-    const mobile        = document.getElementById("mobile").value
-    const email         = document.getElementById("email-id").value.trim()
+    const teacherName = document.getElementById("teacherName").value.trim()
+    const gender = document.getElementById("gender").value.trim()
+    const dob = document.getElementById("dob").value.trim()
+    const religion = document.getElementById("religion").value.trim()
+    const mobile = document.getElementById("mobile").value.trim()
+    const address = document.getElementById("address").value.trim()
+    const city = document.getElementById("city").value.trim()
+    const state = document.getElementById("state").value.trim()
+    const country = document.getElementById("country").value.trim()
+    const pincode = document.getElementById("pincode").value
     const qualification = document.getElementById("qualification").value.trim()
-    const subjects      = document.getElementById("subjects").value.trim()
-    const address       = document.getElementById("address").value.trim()
-    const city          = document.getElementById("city").value.trim()
-    const state         = document.getElementById("state").value.trim()
-    const country       = document.getElementById("country").value.trim()
-    const pincode       = document.getElementById("pincode").value
-    const previousSchool= document.getElementById("previousSchool").value.trim()
+    const previousSchool = document.getElementById("previousSchool").value.trim()
+    const email = document.getElementById("email-id").value
+    const subjects = document.getElementById("subjects").value.trim()
     
     const payload = {
-        teacherName    : teacherName,
-        gender         : gender,
-        dob            : dob,
-        religion       : religion,
-        mobile         : mobile,
-        email          : email,
-        qualification  : qualification,
-        subjects       : subjects,
-        address        : address,
-        city           : city,
-        state          : state,
-        country        : country,
-        pincode        : pincode,
-        previousSchool : previousSchool 
-    }   
-    
+        teacherName,
+        gender,
+        dob,
+        religion,
+        mobile,
+        address,
+        state,
+        city,
+        country,
+        pincode,
+        qualification,
+        previousSchool,
+        email,
+        subjects
+    }
+
     try
     {
-        await axios.post("teacher", payload, getServerSession())
+        const res = await axios.post("/teacher", payload, getServerSession())
+        console.log(res.data);
+        
         closeDrawer()
         form.reset()
         Swal.fire({
@@ -68,6 +70,8 @@ const createTeacher = async (event)=>{
     }
     catch(err)
     {
+        console.log(err.response ? err.response.data.message : err.message);
+        
         Swal.fire({
             icon:"error",
             title: "Failed",
@@ -81,30 +85,7 @@ const createTeacher = async (event)=>{
     }
 }
 
-const fetchSubject = async ()=>{
-    try
-    {
-        const res =  await axios.get("subject", getServerSession())
-        const classSubject = document.getElementById("subjects")
-
-        for(let subject of res.data)
-        {
-            const option = `<option>${subject.subjectName}</option>`
-            classSubject.innerHTML += option
-        }
-    }
-    catch(err)
-    {
-        swal.fire({
-            icon  : "error",
-            title : "Failed",
-            text  : err.response ? err.response.data.message : err.message
-        })
-    }
-} 
-
-
-const fetchTeacher = async ()=>{
+const fetchTeachers = async ()=>{
     try
     {
         const res = await axios.get("/teacher", getServerSession())
@@ -168,6 +149,28 @@ const fetchTeacher = async ()=>{
     }
     
 }
+
+const fetchSubject = async ()=>{
+    try
+    {
+        const res =  await axios.get("subject", getServerSession())
+        const classSubject = document.getElementById("subjects")
+
+        for(let subject of res.data)
+        {
+            const option = `<option value = '${subject.subjectName}'>${subject.subjectName}</option>`
+            classSubject.innerHTML += option
+        }
+    }
+    catch(err)
+    {
+        swal.fire({
+            icon  : "error",
+            title : "Failed",
+            text  : err.response ? err.response.data.message : err.message
+        })
+    }
+} 
 
 const deleteTeacher = async (id)=>{
     try
@@ -242,13 +245,12 @@ const editTeacher = (teacherName, gender, dob, religion, mobile, email, qualific
     editId = id
 }
 
-// Update Student
 const updateTeacher = async ()=>{
     
-    const teacherName   = document.getElementById("teacherName").value.trim()
+    const teacherName   = document.getElementById("teacherName").value
     const mobile        = document.getElementById("mobile").value
-    const email         = document.getElementById("email-id").value.trim()
-    const subjects      = document.getElementById("subjects").value.trim()
+    const email         = document.getElementById("email-id").value
+    const subjects      = document.getElementById("subjects").value
     
     const payload = {
         teacherName    : teacherName,
