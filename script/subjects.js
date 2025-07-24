@@ -46,9 +46,7 @@ const createSubject = async (event) =>{
         }) 
     }
     catch(err)
-    {
-        console.log(err.response ? err.response.data.message : err.message);
-        
+    {        
         Swal.fire({
             icon:"error",
             title: "Subject Failed",
