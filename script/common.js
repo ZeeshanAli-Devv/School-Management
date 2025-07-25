@@ -182,6 +182,16 @@ const getServerSession = ()=>{
     return options
 }
 
-const searchData = (input) =>{
-    alert()
+function searchData(input) {
+  const filter = input.value.toLowerCase();
+  const sidebarLinks = document.querySelectorAll('#sidebar nav a');
+
+  sidebarLinks.forEach(link => {
+    const text = link.innerText.toLowerCase();
+    if (text.includes(filter)) {
+      link.style.display = 'flex'; // Show
+    } else {
+      link.style.display = 'none'; // Hide
+    }
+  });
 }

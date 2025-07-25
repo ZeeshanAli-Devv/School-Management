@@ -296,3 +296,17 @@ const updateStudent = async ()=>{
         })   
     }
 }
+
+function filterStudents() {
+  const input = document.getElementById("studentSearch").value.toLowerCase();
+  const rows = document.querySelectorAll("#studentBox tr");
+
+  rows.forEach(row => {
+    const text = row.innerText.toLowerCase();
+    if (text.includes(input)) {
+      row.style.display = ""; 
+    } else {
+      row.style.display = "none"; 
+    }
+  });
+}

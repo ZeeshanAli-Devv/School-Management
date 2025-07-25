@@ -213,3 +213,17 @@ const updateClasses = async ()=> {
         })   
     }
 }
+
+const filterClass = ()=>{
+    const input = document.getElementById("classSearch").value.toLowerCase();
+   const rows = document.querySelectorAll("#classBox tr");
+
+  rows.forEach(row => {
+    const text = row.innerText.toLowerCase();
+    if (text.includes(input)) {
+      row.style.display = ""; 
+    } else {
+      row.style.display = "none"; 
+    }
+  });
+}
