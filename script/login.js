@@ -28,7 +28,7 @@ const login = async(event)=>{
             toast : true,
             position : 'top-end',
             timerProgressBar : true,
-            timer : 3000
+            timer : 2000
         }).then(()=>{
             location.replace("app/dashboard.html")
         })
@@ -43,7 +43,7 @@ const login = async(event)=>{
             toast : true,
             position : 'top-end',
             timerProgressBar : true,
-            timer : 3000
+            timer : 2000
         })
     }
 }

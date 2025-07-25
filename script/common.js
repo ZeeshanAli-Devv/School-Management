@@ -1,27 +1,3 @@
-const picture = document.getElementById("profilePicture");
-const pic = localStorage.getItem("profile");
-
-window.onload = ()=>{
-  if(pic){
-    picture.src = pic;
-  }
-}
-
-// Update Photo
-const Updatedphoto = (event)=>{
-  event.preventDefault()
-  const pictureInput = document.getElementById("profilePictureInput");
-  const file = pictureInput.files[0];
-  const fileReader = new FileReader();
-  fileReader.readAsDataURL(file);
-
-  fileReader.onload =(e)=>{
-    const data = e.target.result;
-    picture.src = data;
-    localStorage.setItem("profile", data)
-  }
-}
-
 // Check Token
 let session = null;
 const server = "http://localhost:8080";
@@ -170,4 +146,8 @@ const getServerSession = ()=>{
         }
     }
     return options
+}
+
+const searchData = (input) =>{
+    alert()
 }

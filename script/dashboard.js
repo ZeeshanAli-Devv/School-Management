@@ -1,5 +1,8 @@
+axios.defaults.baseURL = server;
+
 window.onload = async ()=>{
   await getSession()
+  await fetchDashboard()
 }
 
 // Charts 
@@ -152,3 +155,31 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
 });
+
+const fetchDashboard = async ()=>{
+  try
+  {
+    const res = await axios.get("/dashboard", getServerSession())
+    console.log(res.data)
+
+    const studentData  = document.getElementById("student")
+    const teacherData  = document.getElementById("teacher")
+    const employeeData = document.getElementById("employee")
+    const subjectData  = document.getElementById("subject")
+    const classData    = document.getElementById("class")
+    const paymentData  = document.getElementById("payment")
+    const expenseData  = document.getElementById("expense")
+
+    studentData.innerHTML = res.data.studentData
+    teacherData.innerHTML = res.data.teacherData
+    employeeData.innerHTML= res.data.employeeData
+    subjectData.innerHTML = res.data.subjectData
+    classData.innerHTML   = res.data.classData
+    paymentData.innerHTML = res.data.paymentData
+    expenseData.innerHTML = res.data.expenseData
+  }
+  catch(err)
+  {
+    console.log(err.response ? err.response.data.message : err.message);
+  }
+}
