@@ -180,3 +180,17 @@ const saveSubject = async ()=>{
         })
     }
 }
+
+const filterSubject = ()=>{
+    const input = document.getElementById("subjectSearch").value.toLowerCase();
+   const rows = document.querySelectorAll("#subjectBox tr");
+
+  rows.forEach(row => {
+    const text = row.innerText.toLowerCase();
+    if (text.includes(input)) {
+      row.style.display = ""; 
+    } else {
+      row.style.display = "none"; 
+    }
+  });
+}

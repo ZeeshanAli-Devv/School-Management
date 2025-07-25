@@ -20,10 +20,14 @@ const createSalary = async (event)=>{
         salaryDate,
         description
     }
+    console.log(payload);
+    
 
     try
     {
-        await axios.post("/salary", payload, getServerSession())
+        const res = await axios.post("salary", payload, getServerSession())
+        console.log(res.data);
+        
         Swal.fire({
             icon:"success",
             title: "Salary Added",
@@ -49,6 +53,10 @@ const createSalary = async (event)=>{
             timerProgressBar : true,
             timer : 2000
         })
+
+        console.log(err.response ? err.response.data.message : err.message);
+        
+        
     }
 }
 
@@ -76,9 +84,10 @@ const fetchEmployee = async ()=>{
 
 const getSalary = async ()=>{
     const res = await axios.get("/salary", getServerSession());
-    const salaryBody = document.getElementById("salary");
+    const salaryBody = document.getElementById("salaryBox");
     salaryBody.innerHTML = ""
-
+    console.log(res.data);
+    
     for(let salary of res.data)
     {
         const ui = `
@@ -90,7 +99,7 @@ const getSalary = async ()=>{
                 <td class="px-6 py-4 whitespace-nowraptext-sm font-medium">
                   <div class="flex items-center gap-3">
                     <button onclick = "deleteSalary('${salary._id}')" class="text-red-600  w-6 h-6 bg-red-100 rounded-full cursor-pointer hover:scale-110 transition-all">
-                      <i class="ri-delete-bin-line"></i>
+                          <i class="ri-delete-bin-line"></i>
                     </button>
                   </div>
                 </td>
@@ -130,4 +139,18 @@ const deleteSalary = async (id)=>{
             timer : 2000
         })
     }
+}
+
+const filterSalary = ()=>{
+    const input = document.getElementById("salarySearch").value.toLowerCase();
+    const rows = document.querySelectorAll("#salaryBox tr");
+
+  rows.forEach(row => {
+    const text = row.innerText.toLowerCase();
+    if (text.includes(input)) {
+      row.style.display = ""; 
+    } else {
+      row.style.display = "none"; 
+    }
+  });
 }

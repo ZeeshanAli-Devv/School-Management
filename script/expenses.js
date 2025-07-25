@@ -177,3 +177,17 @@ const updateExpense = async ()=>{
         })
     }
 }
+
+const filterExpense = ()=>{
+    const input = document.getElementById("expenseSearch").value.toLowerCase();
+   const rows = document.querySelectorAll("#expenseBody tr");
+
+  rows.forEach(row => {
+    const text = row.innerText.toLowerCase();
+    if (text.includes(input)) {
+      row.style.display = ""; 
+    } else {
+      row.style.display = "none"; 
+    }
+  });
+}

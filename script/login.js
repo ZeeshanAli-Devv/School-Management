@@ -31,6 +31,7 @@ const login = async(event)=>{
             timer : 2000
         }).then(()=>{
             location.replace("app/dashboard.html")
+            
         })
     }
     catch(err)

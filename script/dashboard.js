@@ -169,6 +169,7 @@ const fetchDashboard = async ()=>{
     const classData    = document.getElementById("class")
     const paymentData  = document.getElementById("payment")
     const expenseData  = document.getElementById("expense")
+    // const username = document.getElementById("userName")
 
     studentData.innerHTML = res.data.studentData
     teacherData.innerHTML = res.data.teacherData
@@ -177,6 +178,8 @@ const fetchDashboard = async ()=>{
     classData.innerHTML   = res.data.classData
     paymentData.innerHTML = res.data.paymentData
     expenseData.innerHTML = res.data.expenseData
+    // username.innerHTML = session.studentData
+
   }
   catch(err)
   {

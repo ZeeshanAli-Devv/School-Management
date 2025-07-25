@@ -245,3 +245,17 @@ const saveEmployee = async ()=>{
         })   
     }
 }
+
+const filterEmployee = ()=>{
+    const input = document.getElementById("employeeSearch").value.toLowerCase();
+   const rows = document.querySelectorAll("#employeeBox tr");
+
+  rows.forEach(row => {
+    const text = row.innerText.toLowerCase();
+    if (text.includes(input)) {
+      row.style.display = ""; 
+    } else {
+      row.style.display = "none"; 
+    }
+  });
+}

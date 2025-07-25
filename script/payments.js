@@ -146,3 +146,17 @@ const deletepayment = async (id)=>{
         })
     }
 }
+
+const filterPayment = ()=>{
+    const input = document.getElementById("paymentSearch").value.toLowerCase();
+   const rows = document.querySelectorAll("#payment tr");
+
+  rows.forEach(row => {
+    const text = row.innerText.toLowerCase();
+    if (text.includes(input)) {
+      row.style.display = ""; 
+    } else {
+      row.style.display = "none"; 
+    }
+  });
+}
