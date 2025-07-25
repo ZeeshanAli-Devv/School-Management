@@ -1,3 +1,37 @@
+document.addEventListener("DOMContentLoaded", async () => {
+  // Profile Picture set from localStorage
+  const profile = localStorage.getItem("profile");
+  const pic = document.getElementById("profilePicture");
+  
+  if (pic && profile) {
+    pic.src = profile;
+  }
+
+  // Set picture change event if input exists
+  const input = document.getElementById("pictureInput");
+  if (input) {
+    input.onchange = Updatedphoto;
+  }
+});
+
+// Picture Change Handler
+const Updatedphoto = () => {
+  const input = document.getElementById("profilePictureInput");
+  const pic = document.getElementById("profilePicture");
+  const file = input.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.readAsDataURL(file);
+
+  reader.onload = (e) => {
+    const data = e.target.result;
+    pic.src = data;
+    localStorage.setItem("profile", data);
+  };
+};
+
+
 // Check Token
 let session = null;
 const server = "http://localhost:8080";
