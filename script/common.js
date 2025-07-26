@@ -43,11 +43,11 @@ const getSession = async ()=>{
 
     if(!token)
     {
-        if(url.includes("login.html") || url.includes("signup.html"))
+        if(url.includes("index.html") || url.includes("signup.html"))
         {
             return
         }
-        location.replace("../login.html");
+        location.replace("../index.html");
     }
     else{
         try
@@ -58,11 +58,11 @@ const getSession = async ()=>{
         catch(err)
         {
             localStorage.clear()
-            if(url.includes("login.html") || url.includes("signup.html"))
+            if(url.includes("index.html") || url.includes("signup.html"))
             {
                 return
             }
-            location.replace("../login.html");
+            location.replace("../index.html");
         }
     }
 }
@@ -116,7 +116,7 @@ function confirmLogout() {
     confirmButtonText: 'Yes, logout'
     }).then((result) => {
     if (result.isConfirmed) {
-        location.replace("../login.html")
+        location.replace("../index.html")
         localStorage.removeItem("token")
         Swal.fire('Logged Out!', 'You have been successfully logged out.', 'success');
 

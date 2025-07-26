@@ -36,7 +36,7 @@ const signup = async (event)=> {
             timerProgressBar : true,
             timer : 3000
         }).then(()=>{
-            location.replace("login.html")
+            location.replace("index.html")
         })
     }
     catch(err)
