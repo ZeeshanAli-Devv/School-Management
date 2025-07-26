@@ -259,3 +259,133 @@ const filterEmployee = ()=>{
     }
   });
 }
+
+// Export functionality for employees
+document.addEventListener('DOMContentLoaded', () => {
+  const exportSelect = document.querySelector('select'); // Get the export dropdown
+  
+  exportSelect.addEventListener('change', async (e) => {
+    const format = e.target.value;
+    
+    if(format === 'PDF' || format === 'XLS') {
+      try {
+        // Fetch employee data
+        const res = await axios.get("/employee", getServerSession());
+        const employees = res.data;
+        
+        if(format === 'PDF') {
+          await exportEmployeesToPDF(employees);
+        } else {
+          await exportEmployeesToXLS(employees);
+        }
+        
+        // Reset the select
+        e.target.value = 'Export';
+        
+      } catch(err) {
+        Swal.fire({
+          icon: "error",
+          title: "Export Failed",
+          text: err.response ? err.response.data.message : err.message,
+          showConfirmButton: false,
+          toast: true,
+          position: 'top-end',
+          timerProgressBar: true,
+          timer: 2000
+        });
+      }
+    }
+  });
+});
+
+// Export employees to PDF
+const exportEmployeesToPDF = async (employees) => {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+  
+  // Add title
+  doc.text('Employees List', 10, 10);
+  
+  // Add table headers
+  const headers = [
+    "No", 
+    "Employee Name", 
+    "Email", 
+    "Mobile", 
+    "Designation", 
+    "Qualification"
+  ];
+  
+  // Prepare data
+  const data = employees.map((employee, index) => [
+    index + 1,
+    employee.employeeName,
+    employee.email,
+    employee.mobile,
+    employee.designation,
+    employee.qualification
+  ]);
+  
+  // Add table
+  doc.autoTable({
+    head: [headers],
+    body: data,
+    startY: 20
+  });
+  
+  // Save the PDF
+  doc.save('employees-list.pdf');
+  
+  Swal.fire({
+    icon: "success",
+    title: "PDF Exported",
+    showConfirmButton: false,
+    toast: true,
+    position: 'top-end',
+    timerProgressBar: true,
+    timer: 2000
+  });
+};
+
+// Export employees to Excel
+const exportEmployeesToXLS = async (employees) => {
+  const XLSX = window.XLSX;
+  
+  // Prepare data
+  const data = employees.map(employee => ({
+    "No": employees.indexOf(employee) + 1,
+    "Employee Name": employee.employeeName,
+    "Email": employee.email,
+    "Mobile": employee.mobile,
+    "Designation": employee.designation,
+    "Qualification": employee.qualification,
+    "Gender": employee.gender,
+    "DOB": employee.dob,
+    "Religion": employee.religion,
+    "Address": employee.address,
+    "City": employee.city,
+    "State": employee.state,
+    "Country": employee.country,
+    "Pincode": employee.pincode
+  }));
+  
+  // Create worksheet
+  const ws = XLSX.utils.json_to_sheet(data);
+  
+  // Create workbook
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, "Employees");
+  
+  // Export to file
+  XLSX.writeFile(wb, "employees-list.xlsx");
+  
+  Swal.fire({
+    icon: "success",
+    title: "Excel Exported",
+    showConfirmButton: false,
+    toast: true,
+    position: 'top-end',
+    timerProgressBar: true,
+    timer: 2000
+  });
+};

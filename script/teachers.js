@@ -288,3 +288,132 @@ const updateTeacher = async ()=>{
         })   
     }
 }
+
+// Export functionality for teachers
+document.addEventListener('DOMContentLoaded', () => {
+  const exportSelect = document.querySelector('select'); // Get the export dropdown
+  
+  exportSelect.addEventListener('change', async (e) => {
+    const format = e.target.value;
+    
+    if(format === 'PDF' || format === 'XLS') {
+      try {
+        // Fetch teacher data
+        const res = await axios.get("/teacher", getServerSession());
+        const teachers = res.data;
+        
+        if(format === 'PDF') {
+          await exportTeachersToPDF(teachers);
+        } else {
+          await exportTeachersToXLS(teachers);
+        }
+        
+        // Reset the select
+        e.target.value = 'Export';
+        
+      } catch(err) {
+        Swal.fire({
+          icon: "error",
+          title: "Export Failed",
+          text: err.response ? err.response.data.message : err.message,
+          showConfirmButton: false,
+          toast: true,
+          position: 'top-end',
+          timerProgressBar: true,
+          timer: 2000
+        });
+      }
+    }
+  });
+});
+
+// Export teachers to PDF
+const exportTeachersToPDF = async (teachers) => {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+  
+  // Add title
+  doc.text('Teachers List', 10, 10);
+  
+  // Add table headers
+  const headers = [
+    "No", 
+    "Teacher Name", 
+    "Email", 
+    "Mobile", 
+    "Subject", 
+    "Qualification"
+  ];
+  
+  // Prepare data
+  const data = teachers.map((teacher, index) => [
+    index + 1,
+    teacher.teacherName,
+    teacher.email,
+    teacher.mobile,
+    teacher.subjects,
+    teacher.qualification
+  ]);
+  
+  // Add table
+  doc.autoTable({
+    head: [headers],
+    body: data,
+    startY: 20
+  });
+  
+  // Save the PDF
+  doc.save('teachers-list.pdf');
+  
+  Swal.fire({
+    icon: "success",
+    title: "PDF Exported",
+    showConfirmButton: false,
+    toast: true,
+    position: 'top-end',
+    timerProgressBar: true,
+    timer: 2000
+  });
+};
+
+// Export teachers to Excel
+const exportTeachersToXLS = async (teachers) => {
+  const XLSX = window.XLSX;
+  
+  // Prepare data
+  const data = teachers.map(teacher => ({
+    "No": teachers.indexOf(teacher) + 1,
+    "Teacher Name": teacher.teacherName,
+    "Email": teacher.email,
+    "Mobile": teacher.mobile,
+    "Subject": teacher.subjects,
+    "Qualification": teacher.qualification,
+    "Gender": teacher.gender,
+    "DOB": teacher.dob,
+    "Address": teacher.address,
+    "City": teacher.city,
+    "State": teacher.state,
+    "Country": teacher.country,
+    "Pincode": teacher.pincode
+  }));
+  
+  // Create worksheet
+  const ws = XLSX.utils.json_to_sheet(data);
+  
+  // Create workbook
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, "Teachers");
+  
+  // Export to file
+  XLSX.writeFile(wb, "teachers-list.xlsx");
+  
+  Swal.fire({
+    icon: "success",
+    title: "Excel Exported",
+    showConfirmButton: false,
+    toast: true,
+    position: 'top-end',
+    timerProgressBar: true,
+    timer: 2000
+  });
+};

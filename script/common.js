@@ -116,7 +116,8 @@ function confirmLogout() {
     confirmButtonText: 'Yes, logout'
     }).then((result) => {
     if (result.isConfirmed) {
-         location.replace("../index.html")
+        location.replace("../login.html")
+        localStorage.removeItem("token")
         Swal.fire('Logged Out!', 'You have been successfully logged out.', 'success');
 
     }

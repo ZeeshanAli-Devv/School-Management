@@ -310,3 +310,139 @@ function filterStudents() {
     }
   });
 }
+
+// Export functionality
+document.addEventListener('DOMContentLoaded', () => {
+  const exportSelect = document.querySelector('select'); // Assuming this is your export dropdown
+  
+  exportSelect.addEventListener('change', async (e) => {
+    const format = e.target.value;
+    
+    if(format === 'PDF' || format === 'XLS') {
+      try {
+        // Fetch student data
+        const res = await axios.get("/student", getServerSession());
+        const students = res.data;
+        
+        if(format === 'PDF') {
+          await exportToPDF(students);
+        } else {
+          await exportToXLS(students);
+        }
+        
+        // Reset the select
+        e.target.value = 'Export';
+        
+      } catch(err) {
+        Swal.fire({
+          icon: "error",
+          title: "Export Failed",
+          text: err.response ? err.response.data.message : err.message,
+          showConfirmButton: false,
+          toast: true,
+          position: 'top-end',
+          timerProgressBar: true,
+          timer: 2000
+        });
+      }
+    }
+  });
+});
+
+// Export to PDF function
+const exportToPDF = async (students) => {
+  // In a real implementation, you would send this to your backend
+  // which would generate the PDF and return it for download
+  
+  // For demo purposes, we'll create a simple PDF client-side
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+  
+  // Add title
+  doc.text('Student List', 10, 10);
+  
+  // Add table headers
+  const headers = [
+    "No", 
+    "Student Name", 
+    "Email", 
+    "Mobile", 
+    "Class", 
+    "Section"
+  ];
+  
+  // Prepare data
+  const data = students.map((student, index) => [
+    index + 1,
+    student.studentName,
+    student.email,
+    student.mobile,
+    student.class.class,
+    student.section.toUpperCase()
+  ]);
+  
+  // Add table
+  doc.autoTable({
+    head: [headers],
+    body: data,
+    startY: 20
+  });
+  
+  // Save the PDF
+  doc.save('students-list.pdf');
+  
+  Swal.fire({
+    icon: "success",
+    title: "PDF Exported",
+    showConfirmButton: false,
+    toast: true,
+    position: 'top-end',
+    timerProgressBar: true,
+    timer: 2000
+  });
+};
+
+// Export to Excel function
+const exportToXLS = async (students) => {
+  // Using SheetJS library (xlsx)
+  const XLSX = window.XLSX;
+  
+  // Prepare data
+  const data = students.map(student => ({
+    "No": students.indexOf(student) + 1,
+    "Student Name": student.studentName,
+    "Father Name": student.fatherName,
+    "Mother Name": student.motherName,
+    "Email": student.email,
+    "Mobile": student.mobile,
+    "Class": student.class.class,
+    "Section": student.section.toUpperCase(),
+    "Gender": student.gender,
+    "DOB": student.dob,
+    "Address": student.address,
+    "City": student.city,
+    "State": student.state,
+    "Country": student.country,
+    "Pincode": student.pincode
+  }));
+  
+  // Create worksheet
+  const ws = XLSX.utils.json_to_sheet(data);
+  
+  // Create workbook
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, "Students");
+  
+  // Export to file
+  XLSX.writeFile(wb, "students-list.xlsx");
+  
+  Swal.fire({
+    icon: "success",
+    title: "Excel Exported",
+    showConfirmButton: false,
+    toast: true,
+    position: 'top-end',
+    timerProgressBar: true,
+    timer: 2000
+  });
+};
