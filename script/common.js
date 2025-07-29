@@ -43,7 +43,7 @@ const getSession = async ()=>{
 
     if(!token)
     {
-        if(url.includes("login.html") || url.includes("signup.html"))
+        if(url.includes("login.html") || url.includes("index.html"))
         {
             return
         }
@@ -58,7 +58,7 @@ const getSession = async ()=>{
         catch(err)
         {
             localStorage.clear()
-            if(url.includes("login.html") || url.includes("signup.html"))
+            if(url.includes("login.html") || url.includes("index.html"))
             {
                 return
             }
@@ -111,7 +111,7 @@ function confirmLogout() {
     text: 'Are you sure you want to logout?',
     icon: 'question',
     showCancelButton: true,
-    confirmButtonColor: '#4f46e5',
+    confirmButtonColor: '#f13214ff',
     cancelButtonColor: '#6b7280',
     confirmButtonText: 'Yes, logout'
     }).then((result) => {
@@ -119,7 +119,6 @@ function confirmLogout() {
         location.replace("../login.html")
         localStorage.removeItem("token")
         Swal.fire('Logged Out!', 'You have been successfully logged out.', 'success');
-
     }
     });
 }
