@@ -160,7 +160,7 @@ const fetchDashboard = async ()=>{
   try
   {
     const res = await axios.get("/dashboard", getServerSession())
-    console.log(res.data)
+    // console.log(res.data)
 
     const studentData  = document.getElementById("student")
     const teacherData  = document.getElementById("teacher")

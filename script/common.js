@@ -37,37 +37,62 @@ let session = null;
 const server = "http://localhost:8080";
 axios.defaults.baseURL = server;
 
-const getSession = async ()=>{
-    const token = localStorage.getItem("token");
-    const url = location.href;
+// const getSession = async ()=>{
+//     const token = localStorage.getItem("token");
+//     const url = location.href;
 
-    if(!token)
-    {
-        if(url.includes("login.html") || url.includes("index.html"))
-        {
-            return
-        }
-        location.replace("../login.html");
-    }
-    else{
-        try
-        {
-            const res = await axios.post("token/verify", {token : token})
-            session = res.data;
-        }
-        catch(err)
-        {
-            localStorage.clear()
-            if(url.includes("login.html") || url.includes("index.html"))
-            {
-                return
-            }
-            location.replace("../login.html");
-        }
-    }
-}
+//     if(!token)
+//     {
+//         if(url.includes("login.html") || url.includes("index.html"))
+//         {
+//             return
+//         }
+//         location.replace("../login.html");
+//     }
+//     else{
+//         try
+//         {
+//             const res = await axios.post("token/verify", {token : token})
+//             session = res.data;
+//         }
+//         catch(err)
+//         {
+//             localStorage.clear()
+//             if(url.includes("login.html") || url.includes("index.html"))
+//             {
+//                 return
+//             }
+//             location.replace("../login.html");
+//         }
+//     }
+// }
 
 // Toggle Functionality
+
+const getSession = async () => {
+  const token = localStorage.getItem("token");
+  const page = window.location.pathname;
+
+  if (!token) {
+    if (page === "/" || page.includes("index.html") || page.includes("login.html")) {
+      return;
+    }
+    location.replace("../login.html");
+  } else {
+    try {
+      const res = await axios.post("token/verify", { token: token });
+      session = res.data;
+    } catch (err) {
+      localStorage.clear();
+      if (page === "/" || page.includes("index.html") || page.includes("login.html")) {
+        return;
+      }
+      location.replace("../login.html");
+    }
+  }
+};
+
+
 const toggleSidebar = () => {
     const sidebar = document.getElementById("sidebar");
     const main = document.getElementById("main");
